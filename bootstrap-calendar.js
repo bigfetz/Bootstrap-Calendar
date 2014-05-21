@@ -20,20 +20,19 @@
 				weekDays = 7;
 
 		var months = new Array(
-			{name : "January", days : 31},
-	 		{name : "February", days : 28},
-			{name : "March", days : 31},
-			{name : "April", days : 30},
-			{name : "May", days : 31},
-			{name : "June", days : 30},
-			{name : "July", days : 31},
-			{name : "August", days : 31},
-			{name : "September", days : 30},
-			{name : "October", days : 31},
-			{name : "November", days : 30},
-			{name : "December", days : 31}
+			{name : "January"},
+	 		{name : "February"},
+			{name : "March"},
+			{name : "April"},
+			{name : "May"},
+			{name : "June"},
+			{name : "July"},
+			{name : "August"},
+			{name : "September"},
+			{name : "October"},
+			{name : "November"},
+			{name : "December"}
 			);
-
 
 		var current = {
 				year : 2014,
@@ -151,16 +150,17 @@
 			m.setFullYear(year,month,1);
 			var monthArray = new Array(42);
 
-			var prevMonth = month -1 > 0 ? month -1 : 11;
+			var prevMonthDays = new Date(year, month, 0).getDate();
+			var currentMonthDays = new Date(year, month+1, 0).getDate();
 			for(var i = m.getDay(); i > 0 ;i--)
 			{
 				monthArray[m.getDay() - i] = {
-					day : months[prevMonth].days-i+ 1,
+					day : prevMonthDays-i+ 1,
 					isInMonth : false
 					};
 			}
-
-			for(var i = 0; i < months[month].days;i++)
+			
+			for(var i = 0; i < currentMonthDays;i++)
 			{
 				monthArray[m.getDay() + i] = {
 					day : i+1,
@@ -168,7 +168,7 @@
 					};
 			}
 			var index = 1;
-			for(var i = m.getDay() + months[month].days; i < 42 ;i++)
+			for(var i = m.getDay() + currentMonthDays; i < 42 ;i++)
 			{
 				monthArray[i] = {
 					day :   index,
