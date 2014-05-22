@@ -57,6 +57,7 @@ font-size: 30px
 .week{
 	width: 100%;
 	border-bottom: 1px black solid;
+	display: flex;
 }
 
 .week > .day {
@@ -94,6 +95,8 @@ font-size: 30px
 .day-info{
 	padding-left: 10px;
 	padding-right:10px;
+	height: 70%;
+	font-size: 10px
 }
 
 .no-padding{

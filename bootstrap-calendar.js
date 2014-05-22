@@ -12,6 +12,10 @@
 		// minified (especially when both are regularly referenced in your plugin).
 
 		// Create the defaults once
+
+		//todo organize constants
+
+
 		var pluginName = "calendar",
 				defaults = {
 				propertyName: "value"
@@ -20,18 +24,18 @@
 				weekDays = 7;
 
 		var months = new Array(
-			{name : "January"},
-	 		{name : "February"},
-			{name : "March"},
-			{name : "April"},
-			{name : "May"},
-			{name : "June"},
-			{name : "July"},
-			{name : "August"},
-			{name : "September"},
-			{name : "October"},
-			{name : "November"},
-			{name : "December"}
+			"January",
+	 		"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"October",
+			"November",
+			"December"
 			);
 
 		var current = {
@@ -39,6 +43,9 @@
 				month : 4,
 				day : 1
 		};
+
+		var events;
+
 		
 
 		
@@ -51,11 +58,10 @@
 				// more objects, storing the result in the first object. The first object
 				// is generally empty as we don't want to alter the default options for
 				// future instances of the plugin
-				this.settings = $.extend( {}, defaults, options );
+				this.settings = $.extend( {'events' : null }, options );
 				this._defaults = defaults;
 				this._name = pluginName;
 				this.init();
-				
 
 
 		}
@@ -101,27 +107,36 @@
 												'<div class="days-container">'+
 												'</div>'	
 												);
-						
-						populate(getMonth(2014,4));
+						events = this.settings.events;
+						populate(getMonth(2014,4),events);
 
 						$('.month-direction-arrow').click(function(){	
             				if($(this).hasClass('right'))
             				{
-            					mooveMonth(1);
-            					populate(getMonth(current.year,current.month));
+            					moveMonth(1);
+            					populate(getMonth(current.year,current.month),events);
             				}else{
-            					mooveMonth(-1);
-            					populate(getMonth(current.year,current.month));
+            					moveMonth(-1);
+            					populate(getMonth(current.year,current.month),events);
             				}
         				});
 
-				}
+				},
+
+
 		};
 
 		//Private methods
-		var populate = function (days) {
+		/**
+		 * Populates the days-container with current months days 
+		 * with empty spaces filled with prev and next months.
+		 * @param {Number} days 
+		 * @param {JSON} events 
+		 * @return None
+		 */
+		var populate = function (days,events) {
 					$('.days-container').empty();
-					$('.month-name').text(months[current.month].name + ' ' + current.year);	
+					$('.month-name').text(months[current.month] + ' ' + current.year);	
 					for(var i = 0; i < weeks; i++)
 						{
 							$('.days-container').append('<div class="week"></div>')
@@ -133,17 +148,46 @@
 							{
 								if(days[index].isInMonth)
 								{
-									$($('.week')[week]).append('<a class="day"><div class="row"><span>'+ days[index].day +'</span></div><div class="row day-info"></div></div>');
+									$($('.week')[week]).append('<a class="day" day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>');
 								}else{
-									$($('.week')[week]).append('<a class="day other-month"><div class="row"><span>'+ days[index].day +'</span></div><div class="row day-info"></div></div>')
+									$($('.week')[week]).append('<a class="day other-month day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>')
 								}
 								
 								index++;
 							}
 						}
+						loadEvents();
+						
 
 				}
 
+		/**
+		 * Loads events into current month
+		 * @return None
+		 */
+		var loadEvents = function (){
+			$.each(events,function(index,value){	
+							var date = new Date(value.date)
+							if(date.getMonth() == current.month)	
+							{
+								$('a[day-value]').each(function(day){
+									if(date.getDate() == day)
+									{
+										debugger;
+										$(this).find('.day-info').text(value.description);
+									}
+								});	
+							}					
+						});
+		}
+
+		/**
+		 * Gets an array of day objects that hold the day number 
+		 * and wether it is in the current month
+		 * @param {Number} year 
+		 * @param {Number} month 
+		 * @return monthArray
+		 */
 		var getMonth = function (year,month){
 			debugger;
 			var m = new Date();
@@ -181,32 +225,39 @@
 
 		}
 
-		var mooveMonth = function(move){
 
-			if(current.month + move < 0 )
+		/**
+		 * Moves the current month left or right depending on input
+		 * @param {Number} move 
+		 * @return None
+		 */
+		var moveMonth = function(move){
+
+			if(move >0)
 			{
-				current.year--;
-				current.month = 11;
-
-			}else if(current.month + move > 11){
-				current.year++
-				current.month = 0;
-
-
-			}else{
-				current.month += move;
+				debugger;
+				current.year += Math.floor((current.month + 1) / 12);
+				current.month = (current.month + 1) % 12;
+			}else if(move < 0){
+				current.year += current.month - 1  < 0 ? -1 : 0;
+				current.month = current.month - 1  < 0 ? 11 : current.month - 1;
 			}
 
 		}
 
-		
-
+		/**
+		 * Gets the day of the week for januray 1st of inputed year
+		 * @param {Number} year 
+		 * @return {Number} weekday
+		 */
 		var startingWeekDay =  function (year){
 				  var d = new Date(); 
 				  d.setFullYear(year,0,1);
 				  return d.getDay()+1;
 				}
 
+
+		//End Private methods
 
 
 		// A really lightweight plugin wrapper around the constructor,
