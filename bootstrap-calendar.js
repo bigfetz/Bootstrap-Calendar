@@ -168,12 +168,12 @@
 		var loadEvents = function (){
 			$.each(events,function(index,value){	
 							var date = new Date(value.date)
-							if(date.getMonth() == current.month)	
+							debugger;
+							if(date.getMonth() == current.month && date.getFullYear() == current.year)	
 							{
 								$('a[day-value]').each(function(day){
 									if(date.getDate() == day)
 									{
-										debugger;
 										$(this).find('.day-info').append('<input type="hidden" name="eventIndex" value="'+ index +'">')
 										$(this).find('.day-info').append(value.description);
 									}
