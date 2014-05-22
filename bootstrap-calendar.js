@@ -174,7 +174,8 @@
 									if(date.getDate() == day)
 									{
 										debugger;
-										$(this).find('.day-info').text(value.description);
+										$(this).find('.day-info').append('<input type="hidden" name="eventIndex" value="'+ index +'">')
+										$(this).find('.day-info').append(value.description);
 									}
 								});	
 							}					
