@@ -109,7 +109,8 @@
 												);
 						events = this.settings.events;
 						populate(getMonth(2014,4),events);
-
+						initializeEvents();
+						
 						$('.month-direction-arrow').click(function(){	
             				if($(this).hasClass('right'))
             				{
@@ -119,14 +120,49 @@
             					moveMonth(-1);
             					populate(getMonth(current.year,current.month),events);
             				}
+            				initializeEvents();
         				});
+
+						
+
+	        			
+						
+
 
 				},
 
 
 		};
 
+
+
+		
+
 		//Private methods
+
+
+		var initializeEvents = function (){
+			$('.day').click(function(e){
+							$('.display-container').remove();
+							displayDay(this,1);
+							e.stopPropagation();
+	        			})
+
+        				$(document.body).click(function(e){
+	        				$('.display-container').remove();
+	        			});	
+		}
+
+		/**
+		 * Displays the current days events in a popup modal 
+		 * @param {Element} e 
+		 * @param {date} events 
+		 * @return None
+		 */
+		var displayDay = function(e,date){
+			$(e).append('<div class="display-container"><div class="top-pointer"></div><div class="display-day"></div></div>')
+		}
+
 		/**
 		 * Populates the days-container with current months days 
 		 * with empty spaces filled with prev and next months.
@@ -148,7 +184,7 @@
 							{
 								if(days[index].isInMonth)
 								{
-									$($('.week')[week]).append('<a class="day" day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>');
+									$($('.week')[week]).append('<a class="day " day-value="'+ days[index].day +'"><div class=""><span class="">'+ days[index].day +'</span></div><div class=" day-info"></div></div>');
 								}else{
 									$($('.week')[week]).append('<a class="day other-month day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>')
 								}
