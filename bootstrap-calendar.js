@@ -77,8 +77,8 @@
 						// and this.settings
 						// you can add more functions like the one below and
 						// call them like so: this.yourOtherFunction(this.element, this.settings).
-						$(this.element).addClass('calendar-container');
-						$(this.element).append('<div class="month-title row">'+
+						$(this.element).addClass('panel panel-default');
+						$(this.element).append('<div class="panel-body month-title row">'+
 													'<div class="col-md-1 text-center">'+
 														'<a class="btn month-direction-arrow left" >' +
 															'<i class="glyphicon glyphicon-chevron-left"></i>' +
@@ -110,7 +110,7 @@
 						events = this.settings.events;
 						populate(getMonth(2014,4),events);
 						initializeEvents();
-						
+
 						$('.month-direction-arrow').click(function(){	
             				if($(this).hasClass('right'))
             				{

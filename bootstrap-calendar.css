@@ -1,15 +1,14 @@
-.calendar-container{
-	border: 3px black solid;
-	margin: 20px;
+#calendar-container{
 	width: 60%;
-	height: 500px
+	border-right: 0px;
 }
 
 .month-title{
-	height: 50px;
-	border-bottom: 5px black solid;
-	margin-left: 0px; 
+	height: 10%;
+	border-bottom: 1px #ddd solid;
 	margin-right: 0px;
+	margin-left: 0px;
+	border-right: 1px #ddd solid;;
 }
 
 .month-title > div {
@@ -31,7 +30,7 @@ font-size: 30px
 }
 
 .day-header {
-	border-bottom: 1px black solid;
+	border-bottom: 1px #ddd solid;
 	margin-left: 0px; 
 	margin-right: 0px;
 	height: 25px;
@@ -42,7 +41,7 @@ font-size: 30px
 	height:24px;
     width:calc(100% / 7);
     display:inline-block;
-    border-right: 1px black solid;
+    border-right: 1px #ddd  solid;
 }
 
 .days-container{
@@ -56,7 +55,7 @@ font-size: 30px
 
 .week{
 	width: 100%;
-	border-bottom: 1px black solid;
+	border-bottom: 1px #ddd  solid;
 	display: flex;
 }
 
@@ -66,7 +65,7 @@ font-size: 30px
 }
 
 .day{
-	border-right: 1px black solid;
+	border-right: 1px #ddd solid;
 	height: 100%;
 	cursor: pointer;
 	color: black;
