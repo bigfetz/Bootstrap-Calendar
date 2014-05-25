@@ -7,4 +7,4 @@ A simple to use calendar with the ability to add events.
 
 <h3>Info</h3>
 
-This simple plugin was made for devlpers who want a very simplistic calendar that can be modified if needed. I welcome all to add to it and make is into something ever greater. 
+This simple plugin was made for developers who want a very simplistic calendar that can be modified if needed. I welcome all to add to it and make is into something ever greater. 
