@@ -1,5 +1,4 @@
 #calendar-container{
-	width: 60%;
 	border-right: 0px;
 }
 
@@ -9,6 +8,8 @@
 	margin-right: 0px;
 	margin-left: 0px;
 	border-right: 1px #ddd solid;;
+	background-color: #428bca;
+	border-radius: 5px 5px 0px 0px;
 }
 
 .month-title > div {
@@ -27,6 +28,7 @@ font-size: 30px
 .month-direction-arrow{
 	height: 100%;
 	margin-top: 9px;
+	color: white;
 }
 
 .day-header {
@@ -34,6 +36,8 @@ font-size: 30px
 	margin-left: 0px; 
 	margin-right: 0px;
 	height: 25px;
+    border-right: 1px #ddd  solid;
+
 }
 
 .day-header > div > div{
@@ -41,7 +45,7 @@ font-size: 30px
 	height:24px;
     width:calc(100% / 7);
     display:inline-block;
-    border-right: 1px #ddd  solid;
+    background-color: whitesmoke;
 }
 
 .days-container{
@@ -69,6 +73,7 @@ font-size: 30px
 	height: 100%;
 	cursor: pointer;
 	color: black;
+	position:relative;
 }
 
 .other-month{
@@ -92,34 +97,152 @@ font-size: 30px
 }
 
 .day-info{
-	padding-left: 10px;
-	padding-right:10px;
-	height: 70%;
-	font-size: 10px
+	width: 100%;
+	font-size: 10px;
+	position: absolute;
+	bottom: 0;
 }
 
 .no-padding{
 	padding: 0px!important;
 }
 
-.display-day{
-	border: 1px black solid;
-	border-radius: 5px;
-	background-color: wheat;
-	width: 300px;
-	height: 400px;
+.display-container{
 	position: absolute;
+	margin-left: 10px;
+	margin-top: 30px;
+}
+
+
+.display-day{
+	width: 400px;
+	height: 200px;
+	position: absolute;
+	z-index: 999;
+	font-size: 12px;
+	border-color: #ddd;
+	border-top: none;
+}
+
+.display-day > ul {
+	margin-top: 20px;
+	margin-right: 20px;
+
+
+}
+
+.no-event{
+	margin: 0px;
+	text-align: center;
+	font-size: 15px;
+	background-color: whitesmoke;
+}
+
+.no-event > div{
+	margin-top: 50;
+}
+
+.display-day > .panel-body{
+	overflow: auto;
+	height: 81%;
+	/*¯\_(ツ)_/¯ */
+} 
+
+.display-day > .panel-heading{
+
 }
 
 div.top-pointer{
-width: 0; 
+	width: 0; 
 	height: 0; 
 	border-left: 5px solid transparent;  /* left arrow slant */
 	border-right: 5px solid transparent; /* right arrow slant */
-	border-bottom: 5px solid #2f2f2f; /* bottom, add background color here */
+	border-bottom: 10px solid #428bca; /* bottom, add background color here */
 	font-size: 0;
 	line-height: 0;
+	margin-left: 12px;
 }
 
+
+
+
+
+.event{
+ height: 5px;
+ width: 100%
+
+}
+.event-color-container{
+	margin-right: 10px;
+}
+
+.event-color-container > ul{
+display: block;
+}
+
+.event-color-container.red-side{
+	border-left: 10px red solid;
+}
+
+.event-color-container.blue-side{
+	border-left: 10px blue solid;
+}
+
+.event-color-container.green-side{
+	border-left: 10px green solid;
+}
+
+.event-color-container.yellow-side{
+	border-left: 10px yellow solid;
+}
+
+.red-side{
+	/*width: 10px;
+	height: 10%;
+	background-color:red;
+	display: block;*/
+}
+
+.event.event-blue{
+	background-color: blue;
+}
+
+.event.event-red{
+background-color: red;
+}
+
+.event.event-green{
+	background-color: green;
+}
+
+.event.event-yellow{
+	background-color: yellow;
+}
+
+
+
+.no-padding{
+	padding: 0px;
+}
+
+
+.event-btn{
+	margin-bottom: 0;
+	font-weight: 400;
+	cursor: pointer;
+	background-image: none;
+	border: 1px solid transparent;
+	font-size: 14px;
+	line-height: 1.42857143;
+	border-radius: 4px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.event-btn:hover{
+	text-decoration:none;
+}
 
 

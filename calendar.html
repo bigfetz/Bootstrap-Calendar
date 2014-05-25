@@ -4,9 +4,14 @@
 	<link rel="stylesheet" href="bootstrap-calendar.css">
 </head>
 <body>
-	<div id="calendar-container" style="width:60%; margin:20px">
+<div class="row">
+	<div class="col-xs-8 col-xs-2 col-md-8 col-md-offset-2" style="margin-top: 20px">
+		<div id="calendar-container">
 	
 	</div>
+	</div>
+</div>
+	
 
 	
 
@@ -16,23 +21,44 @@
 <script src="bootstrap.js"></script>
 <script src="bootstrap-calendar.js"></script>
 <script type="text/javascript">
+
+	var cal;
 	$( document ).ready(function() {
 		
-		$('#calendar-container').calendar({
+		cal = $('#calendar-container').calendar({
     events: [
         {
             "date": "2014-05-30T04:06:11.102Z",
-            "description": "test1"
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et justo vitae libero venenatis molestie ac at purus. Proin auctor metus tempus justo sodales sodales.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et justo vitae libero venenatis molestie ac at purus. ",
+            "eventColor" : "blue",
+             "url" : "www.twitter.com"
         },
         {
-            "date": "2014-05-25T04:06:11.102Z",
-            "description": "test2"
+            "date": "2014-05-13T04:06:11.102Z",
+            "description": "Pellentesque adipiscing nulla vel mattis elementum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;",
+            "eventColor" : "blue",
+             "url" : "www.reddit.com"
         },
         {
-            "date": "2014-06-25T04:06:11.102Z",
-            "description": "test3"
+            "date": "2014-05-13T04:06:11.102Z",
+            "description": "test Fusce facilisis eleifend ligula. Donec ut augue a magna pharetra aliquet. Vestibulum ante ipsum primis in faucibus orci ",
+            "eventColor" : "blue",
+             "url" : "#"
+        },
+        {
+            "date": "2014-05-13T04:06:11.102Z",
+            "description": "uctus et ultrices posuere cubilia Curae; Mauris cursus scelerisque consequat. Sed sed mollis purus. Mauris ut fringilla odio.justo sodales sodales.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et justo vitae libero venenatis molestie ac at purus.justo sodales sodales.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et justo vitae libero venenatis molestie ac at purus.",
+            "eventColor" : "red",
+            "url" : "www.facebook.com"
         }
     ]
-});
+}).data("plugin_calendar");;
+
 	});
+
+
+
 </script>
+
+
+

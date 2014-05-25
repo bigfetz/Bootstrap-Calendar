@@ -45,7 +45,6 @@
 		};
 
 		var events;
-
 		
 
 		
@@ -58,7 +57,7 @@
 				// more objects, storing the result in the first object. The first object
 				// is generally empty as we don't want to alter the default options for
 				// future instances of the plugin
-				this.settings = $.extend( {'events' : null }, options );
+				this.settings = $.extend( {'events' : new Array() },options );
 				this._defaults = defaults;
 				this._name = pluginName;
 				this.init();
@@ -101,7 +100,7 @@
 														'<div>Wenesday</div>'+
 														'<div>Thursday</div>'+
 														'<div>Friday</div>'+
-														'<div>Saterday</div>'+
+														'<div>Saturday</div>'+
 													'</div>' +
 												'</div>'+
 												'<div class="days-container">'+
@@ -109,7 +108,6 @@
 												);
 						events = this.settings.events;
 						populate(getMonth(2014,4),events);
-						initializeEvents();
 
 						$('.month-direction-arrow').click(function(){	
             				if($(this).hasClass('right'))
@@ -120,32 +118,46 @@
             					moveMonth(-1);
             					populate(getMonth(current.year,current.month),events);
             				}
-            				initializeEvents();
-        				});
+        				}); 
 
-						
-
-	        			
-						
-
+        				return this;
 
 				},
+				addEvent : function(eventItem)
+				{
+					this.settings.events.push(eventItem);
+					populate(getMonth(current.year,current.month),events);
+				},
+
+				addEvents : function(eventsItems)
+				{
+					var self = this;
+					$(eventsItems).each(function(i,val){
+						self.settings.events.push(val);
+					});
+					populate(getMonth(current.year,current.month),events);
+				},
+				removeEvent : function(eventId)
+				{
+					debugger;
+					this.settings.events.splice(eventId, 1);
+					populate(getMonth(current.year,current.month),events);
+				}
 
 
 		};
 
-
-
-		
-
 		//Private methods
 
-
+		/**
+		 * Initializes .click events. This is currently used when switching months.
+		 * @return None
+		 */
 		var initializeEvents = function (){
 			$('.day').click(function(e){
 							$('.display-container').remove();
 							displayDay(this,1);
-							e.stopPropagation();
+							e.stopPropagation();//this is to prevent te throwing of click events
 	        			})
 
         				$(document.body).click(function(e){
@@ -159,8 +171,46 @@
 		 * @param {date} events 
 		 * @return None
 		 */
-		var displayDay = function(e,date){
-			$(e).append('<div class="display-container"><div class="top-pointer"></div><div class="display-day"></div></div>')
+		var displayDay = function(e){
+			var daysEvents = '';
+			var day = new Date(current.year ,current.month , $(e).attr('day-value'));
+			
+			$(e).append(
+				'<div class="display-container">'+
+					'<div class="top-pointer"></div>'+
+					'<div class="panel panel-primary display-day">' +
+						'<div class="panel-heading">'+
+							day.toDateString()+
+						'</div>' +
+					'</div>' +
+				'</div>')
+
+			if($(e).find('input[name=eventIndex]').length > 0){
+
+				$(e).find('.display-day').append(
+					'<div class="panel-body no-padding">'+
+						'<div class="event-color-container red-side"><ul class="red"></ul></div>'+
+						'<div class="event-color-container blue-side"><ul class="blue"></ul></div>'+
+						'<div class="event-color-container green-side"><ul class="green"></ul></div>'+
+						'<div class="event-color-container yellow-side"><ul class="yellow"></ul></div>'+
+					'</div>')
+
+				$($(e).find('input[name=eventIndex]')).each(function(index, value){
+					$(e).find('.'+ events[$(value).val()].eventColor ).append('<li><a class="event-btn" href="'+ events[$(value).val()].url +'">' + events[$(value).val()].description + '</a></li>');
+				});
+
+				//todo figure out better way to do this
+				$($(e).find('.panel-body')).find('ul').each(function (i,val){
+					if($(val).find('li').length == 0){
+						$($(val).closest('.event-color-container')).remove();
+					}
+				});
+
+			}else{
+				$(e).find('.display-day').append('<div class="panel-body no-event"><div>-There are no events this day-</div></div>');
+			}
+
+			
 		}
 
 		/**
@@ -186,14 +236,14 @@
 								{
 									$($('.week')[week]).append('<a class="day " day-value="'+ days[index].day +'"><div class=""><span class="">'+ days[index].day +'</span></div><div class=" day-info"></div></div>');
 								}else{
-									$($('.week')[week]).append('<a class="day other-month day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>')
+									$($('.week')[week]).append('<a class="day other-month" day-value="'+ days[index].day +'"><div class=""><span>'+ days[index].day +'</span></div><div class=" day-info"></div></div>')
 								}
 								
 								index++;
 							}
 						}
 						loadEvents();
-						
+						initializeEvents();
 
 				}
 
@@ -204,16 +254,13 @@
 		var loadEvents = function (){
 			$.each(events,function(index,value){	
 							var date = new Date(value.date)
-							debugger;
 							if(date.getMonth() == current.month && date.getFullYear() == current.year)	
 							{
-								$('a[day-value]').each(function(day){
-									if(date.getDate() == day)
-									{
-										$(this).find('.day-info').append('<input type="hidden" name="eventIndex" value="'+ index +'">')
-										$(this).find('.day-info').append(value.description);
-									}
-								});	
+								var day = ('a:not(.other-month)[day-value='+ (date.getDate()+1) +']');
+								$(day).find('.day-info').append('<input type="hidden" name="eventIndex" value="'+ index +'">')
+								if($(day).find('.day-info').find('.event-' + value.eventColor).length == 0){
+									$(day).find('.day-info').append('<div class="event event-'+ value.eventColor +'"></div>');
+								}
 							}					
 						});
 		}
@@ -226,7 +273,6 @@
 		 * @return monthArray
 		 */
 		var getMonth = function (year,month){
-			debugger;
 			var m = new Date();
 			m.setFullYear(year,month,1);
 			var monthArray = new Array(42);
